@@ -35,6 +35,7 @@ define LIBAMPLAYERM3_INSTALL_STAGING_CMDS
 	install -m 644 $(@D)/usr/include/amlplayer/amports/*.h $(STAGING_DIR)/usr/include/amlplayer/amports
 	mkdir -p $(STAGING_DIR)/usr/include/amlplayer/ppmgr
 	install -m 644 $(@D)/usr/include/amlplayer/ppmgr/*.h $(STAGING_DIR)/usr/include/amlplayer/ppmgr
+	cd $(STAGING_DIR)/usr/include; ln -sf amlplayer amcodec
 	mkdir -p $(STAGING_DIR)/usr/lib
 	install -m 755 $(@D)/usr/lib/libamadec.so $(STAGING_DIR)/usr/lib
 	install -m 755 $(@D)/usr/lib/libamcodec.so.0.0 $(STAGING_DIR)/usr/lib
