@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-XBMC_VERSION = 32f7d13a96979e988f68df48d354f7d814a9f412
+XBMC_VERSION = 4b610bb6f5f42647b3d78af47a04a8f8d950f550
 XBMC_SITE_METHOD = git
 XBMC_SITE = git://github.com/the-hydra/xbmc.git
 XBMC_INSTALL_STAGING = YES
@@ -49,7 +49,6 @@ endef
 
 define XBMC_INSTALL_ETC
   cp -rf package/thirdparty/xbmc/etc $(TARGET_DIR)
-  cp -f package/thirdparty/xbmc/guisettings.xml $(TARGET_DIR)/usr/share/xbmc/system/
   cp -f package/thirdparty/xbmc/advancedsettings.xml $(TARGET_DIR)/usr/share/xbmc/system/
   cp -f package/thirdparty/xbmc/nobs.xml $(TARGET_DIR)/usr/share/xbmc/system/keymaps/
 
