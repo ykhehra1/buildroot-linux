@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-XBMC_VERSION = c7bed95c7c51ea22b20aadc556b4475dee0e6057
+XBMC_VERSION = c6cb16246e0d9c5f5e282093daebbcfd4d34204e
 XBMC_SITE_METHOD = git
 XBMC_SITE = git://github.com/the-hydra/xbmc.git
 XBMC_INSTALL_STAGING = YES
