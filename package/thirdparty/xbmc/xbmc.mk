@@ -14,23 +14,7 @@ XBMC_DEPENDENCIES = host-lzo host-sdl_image
 
 XBMC_CONF_OPT+= --enable-neon --enable-gles --disable-sdl --disable-x11 --disable-xrandr \
   --disable-projectm --enable-debug --disable-joystick --with-cpu=cortex-a9 \
-  --enable-codec=amcodec --enable-player=amlplayer
-
-ifeq ($(BR2_XBMC_POWERDOWN),y)
-XBMC_CONF_OPT += --enable-powerdown
-endif
-
-ifeq ($(BR2_XBMC_SUSPEND),y)
-XBMC_CONF_OPT += --enable-suspend
-endif
-
-ifeq ($(BR2_XBMC_HIBERNATE),y)
-XBMC_CONF_OPT += --enable-hibernate
-endif
-
-ifeq ($(BR2_XBMC_REBOOT),y)
-XBMC_CONF_OPT += --enable-reboot
-endif
+  --enable-codec=amcodec --enable-player=amlplayer --enable-suspend
 
 XBMC_DEPENDENCIES += libogg flac libmad libmpeg2 libogg \
   libsamplerate libtheora libvorbis wavpack bzip2 dbus libcdio \
