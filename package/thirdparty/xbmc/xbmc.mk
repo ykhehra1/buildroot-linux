@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-XBMC_VERSION = 20cc9445a2b99b227a6dc3d138f3fcd11b3d3c85
+XBMC_VERSION = e163e5867bed0b96bbc7436e74e2b427a6c878b7
 XBMC_SITE_METHOD = git
 XBMC_SITE = git://github.com/the-hydra/xbmc.git
 XBMC_INSTALL_STAGING = YES
@@ -14,7 +14,7 @@ XBMC_DEPENDENCIES = host-lzo host-sdl_image
 
 XBMC_CONF_OPT+= --enable-neon --enable-gles --disable-sdl --disable-x11 --disable-xrandr \
   --disable-projectm --enable-debug --disable-joystick --with-cpu=cortex-a9 \
-  --enable-codec=amcodec --enable-player=amlplayer --enable-suspend
+  --enable-codec=amcodec --enable-player=amlplayer --enable-suspend --enable-reboot
 
 XBMC_DEPENDENCIES += libogg flac libmad libmpeg2 libogg \
   libsamplerate libtheora libvorbis wavpack bzip2 dbus libcdio \
