@@ -8,7 +8,7 @@ TVHEADEND_VERSION           = 2b649954346aa2e9c81834d500a25c528f31f829
 TVHEADEND_SITE              = git://github.com/tvheadend/tvheadend.git
 TVHEADEND_LICENSE           = GPLv3+
 TVHEADEND_LICENSE_FILES     = LICENSE
-TVHEADEND_DEPENDENCIES      = host-pkgconf host-python openssl
+TVHEADEND_DEPENDENCIES      = host-pkg-config host-python openssl
 
 ifeq ($(BR2_PACKAGE_TVHEADEND_AVAHI),y)
 TVHEADEND_DEPENDENCIES     += avahi
@@ -34,7 +34,7 @@ define TVHEADEND_INSTALL_DB
 endef
 TVHEADEND_POST_INSTALL_TARGET_HOOKS  = TVHEADEND_INSTALL_DB
 
-define TVHEADEND_INSTALL_INIT_SYSV
+define TVHEADEND_POST_INSTALL_TARGET_HOOKS
 	$(INSTALL) -D package/tvheadend/etc.default.tvheadend $(TARGET_DIR)/etc/default/tvheadend
 	$(INSTALL) -D package/tvheadend/S99tvheadend          $(TARGET_DIR)/etc/init.d/S99tvheadend
 endef
@@ -47,4 +47,3 @@ endef
 # tvheadend is not an autotools-based package, but it is possible to
 # call its ./configure script as if it were an autotools one.
 $(eval $(call AUTOTARGETS,package,tvheadend))
-

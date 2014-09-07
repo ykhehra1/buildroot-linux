@@ -3,12 +3,11 @@
 #librtmp
 #
 #############################################################
-LIBRTMP_VERSION = e0056c51cc1710c9a44d2a2c4e2f344fa9cabcf4
+LIBRTMP_VERSION = 79459a2b43f41ac44a2ec001139bcb7b1b8f7497
 LIBRTMP_SOURCE = rtmpdump-$(LIBRTMP_VERSION).tar.gz
 LIBRTMP_SITE_METHOD = git
 LIBRTMP_SITE = git://git.ffmpeg.org/rtmpdump
 LIBRTMP_INSTALL_STAGING = YES
-
 LIBRTMP_DEPENDENCIES = openssl
 
 define LIBRTMP_BUILD_CMDS
@@ -21,7 +20,7 @@ define LIBRTMP_INSTALL_STAGING_CMDS
 endef
 
 define LIBRTMP_INSTALL_TARGET_CMDS
-	install -m 644 $(@D)/librtmp/librtmp.so.0 $(TARGET_DIR)/usr/lib
+	install -m 644 $(@D)/librtmp/librtmp.so.1 $(TARGET_DIR)/usr/lib
 endef
 
 $(eval $(call GENTARGETS,package/thirdparty,librtmp))
