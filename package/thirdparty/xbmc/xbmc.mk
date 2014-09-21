@@ -14,7 +14,7 @@ XBMC_DEPENDENCIES = host-lzo host-sdl_image
 
 XBMC_CONF_OPT+= --enable-neon --enable-gles --disable-sdl --disable-x11 --disable-xrandr \
   --disable-projectm --enable-debug --disable-joystick --with-cpu=cortex-a9 \
-  --enable-codec=amcodec --enable-player=amlplayer --enable-suspend --enable-powerdown --enable-reboot
+  --enable-codec=amcodec --enable-player=amlplayer --enable-suspend --enable-powerdown --enable-reboot --with-ffmpeg
 
 XBMC_DEPENDENCIES += libogg flac libmad libmpeg2 libogg \
   libsamplerate libtheora libvorbis wavpack bzip2 dbus libcdio \
@@ -23,7 +23,7 @@ XBMC_DEPENDENCIES += libogg flac libmad libmpeg2 libogg \
   libmicrohttpd libssh2 boost fribidi ncurses pcre libnfs afpfs-ng \
   libplist libshairport libbluray libcec \
   readline expat libxml2 yajl samba30 libass opengl libusb-compat \
-  avahi udev tinyxml taglib18 libssh ffmpeg
+  avahi udev tinyxml taglib18 libssh
 
 ifeq ($(BR2_PACKAGE_LIBAMPLAYERM1),y)
 XBMC_DEPENDENCIES += libamplayerm1
