@@ -3,7 +3,7 @@
 # ffmpeg
 #
 #############################################################
-FFMPEG_VERSION := 0.5.2
+FFMPEG_VERSION := 2.2.4
 FFMPEG_SOURCE := ffmpeg-$(FFMPEG_VERSION).tar.bz2
 FFMPEG_SITE := http://ffmpeg.org/releases
 FFMPEG_INSTALL_STAGING = YES
