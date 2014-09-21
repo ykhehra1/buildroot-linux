@@ -1,19 +1,75 @@
-#############################################################
+################################################################################
 #
 # ffmpeg
 #
-#############################################################
-FFMPEG_VERSION := 2.2.4
-FFMPEG_SOURCE := ffmpeg-$(FFMPEG_VERSION).tar.bz2
-FFMPEG_SITE := http://ffmpeg.org/releases
+################################################################################
+
+FFMPEG_VERSION = 2.2.4
+FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VERSION).tar.bz2
+FFMPEG_SITE = http://ffmpeg.org/releases
 FFMPEG_INSTALL_STAGING = YES
-FFMPEG_INSTALL_TARGET = YES
+
+FFMPEG_LICENSE = LGPLv2.1+, libjpeg license
+FFMPEG_LICENSE_FILES = LICENSE COPYING.LGPLv2.1
+ifeq ($(BR2_PACKAGE_FFMPEG_GPL),y)
+FFMPEG_LICENSE += and GPLv2+
+FFMPEG_LICENSE_FILES += COPYING.GPLv2
+endif
 
 FFMPEG_CONF_OPT = \
 	--prefix=/usr		\
-	--enable-shared 	\
-	--disable-avfilter	\
-	--disable-vhook		\
+	--enable-avfilter \
+	--disable-debug \
+	--disable-version3 \
+	--enable-logging \
+	--disable-pic \
+	--enable-optimizations \
+	--disable-extra-warnings \
+	--disable-ffprobe \
+	--enable-avdevice \
+	--enable-avcodec \
+	--enable-avformat \
+	--enable-swscale \
+	--enable-postproc \
+	--disable-x11grab \
+	--enable-network \
+	--disable-gray \
+	--enable-swscale-alpha \
+	--disable-small \
+	--enable-dct \
+	--enable-fft \
+	--enable-mdct \
+	--enable-rdft \
+	--disable-crystalhd \
+	--disable-vdpau \
+	--disable-dxva2 \
+	--enable-runtime-cpudetect \
+	--disable-hardcoded-tables \
+	--disable-memalign-hack \
+	--enable-hwaccels \
+	--disable-avisynth \
+	--disable-frei0r \
+	--disable-libopencore-amrnb \
+	--disable-libopencore-amrwb \
+	--disable-libopencv \
+	--disable-libdc1394 \
+	--disable-libfaac \
+	--disable-libfreetype \
+	--disable-libgsm \
+	--disable-libmp3lame \
+	--disable-libnut \
+	--disable-libopenjpeg \
+	--disable-librtmp \
+	--disable-libschroedinger \
+	--disable-libspeex \
+	--disable-libtheora \
+	--disable-libvo-aacenc \
+	--disable-libvo-amrwbenc \
+	--disable-sram \
+	--disable-symver \
+	--disable-doc
+
+FFMPEG_DEPENDENCIES += $(if $(BR2_PACKAGE_LIBICONV),libiconv)
 
 ifeq ($(BR2_PACKAGE_FFMPEG_GPL),y)
 FFMPEG_CONF_OPT += --enable-gpl
@@ -86,7 +142,7 @@ endif
 
 ifneq ($(call qstrip,$(BR2_PACKAGE_FFMPEG_BSFS)),all)
 FFMPEG_CONF_OPT += --disable-bsfs \
-	$(foreach x,$(call qstrip,$(BR2_PACKAGE_FFMPEG_BSFS)),--enable-bsf=$(x))
+	$(foreach x,$(call qstrip,$(BR2_PACKAGE_FFMPEG_BSFS)),--enable-bsfs=$(x))
 endif
 
 ifneq ($(call qstrip,$(BR2_PACKAGE_FFMPEG_PROTOCOLS)),all)
@@ -124,9 +180,138 @@ else
 FFMPEG_CONF_OPT += --disable-zlib
 endif
 
-# MMX on is default for x86, disable it for lowly x86-type processors
-ifeq ($(BR2_x86_i386)$(BR2_x86_i486)$(BR2_x86_i586)$(BR2_x86_i686)$(BR2_x86_pentiumpro)$(BR2_x86_geode),y)
+ifeq ($(BR2_PACKAGE_BZIP2),y)
+FFMPEG_CONF_OPT += --enable-bzlib
+FFMPEG_DEPENDENCIES += bzip2
+else
+FFMPEG_CONF_OPT += --disable-bzlib
+endif
+
+ifeq ($(BR2_PACKAGE_OPENSSL),y)
+# openssl isn't license compatible with GPL
+ifeq ($(BR2_PACKAGE_FFMPEG_GPL)x$(BR2_PACKAGE_FFMPEG_NONFREE),yx)
+FFMPEG_CONF_OPT += --disable-openssl
+else
+FFMPEG_CONF_OPT += --enable-openssl
+FFMPEG_DEPENDENCIES += openssl
+endif
+else
+FFMPEG_CONF_OPT += --disable-openssl
+endif
+
+ifeq ($(BR2_PACKAGE_LIBVORBIS),y)
+FFMPEG_DEPENDENCIES += libvorbis
+FFMPEG_CONF_OPT += \
+	--enable-libvorbis \
+	--enable-muxer=ogg \
+	--enable-encoder=libvorbis
+endif
+
+ifeq ($(BR2_PACKAGE_LIBVA),y)
+FFMPEG_CONF_OPT += --enable-vaapi
+FFMPEG_DEPENDENCIES += libva
+else
+FFMPEG_CONF_OPT += --disable-vaapi
+endif
+
+ifeq ($(BR2_X86_CPU_HAS_MMX),y)
+FFMPEG_CONF_OPT += --enable-yasm
+FFMPEG_DEPENDENCIES += host-yasm
+else
+FFMPEG_CONF_OPT += --disable-yasm
 FFMPEG_CONF_OPT += --disable-mmx
+endif
+
+ifeq ($(BR2_X86_CPU_HAS_SSE),y)
+FFMPEG_CONF_OPT += --enable-sse
+else
+FFMPEG_CONF_OPT += --disable-sse
+endif
+
+ifeq ($(BR2_X86_CPU_HAS_SSE2),y)
+FFMPEG_CONF_OPT += --enable-sse2
+else
+FFMPEG_CONF_OPT += --disable-sse2
+endif
+
+ifeq ($(BR2_X86_CPU_HAS_SSE3),y)
+FFMPEG_CONF_OPT += --enable-sse3
+else
+FFMPEG_CONF_OPT += --disable-sse3
+endif
+
+ifeq ($(BR2_X86_CPU_HAS_SSSE3),y)
+FFMPEG_CONF_OPT += --enable-ssse3
+else
+FFMPEG_CONF_OPT += --disable-ssse3
+endif
+
+ifeq ($(BR2_X86_CPU_HAS_SSE4),y)
+FFMPEG_CONF_OPT += --enable-sse4
+else
+FFMPEG_CONF_OPT += --disable-sse4
+endif
+
+ifeq ($(BR2_X86_CPU_HAS_SSE42),y)
+FFMPEG_CONF_OPT += --enable-sse42
+else
+FFMPEG_CONF_OPT += --disable-sse42
+endif
+
+# Explicitly disable everything that doesn't match for ARM
+# FFMPEG "autodetects" by compiling an extended instruction via AS
+# This works on compilers that aren't built for generic by default
+ifeq ($(BR2_arm920t)$(BR2_arm922t)$(BR2_strongarm)$(BR2_fa526),y)
+FFMPEG_CONF_OPT += --disable-armv5te
+endif
+ifeq ($(BR2_arm1136jf_s)$(BR2_arm1176jz_s)$(BR2_arm1176jzf_s),y)
+FFMPEG_CONF_OPT += --enable-armv6
+else
+FFMPEG_CONF_OPT += --disable-armv6 --disable-armv6t2
+endif
+ifeq ($(BR2_arm10)$(BR2_arm1136jf_s)$(BR2_arm1176jz_s)$(BR2_arm1176jzf_s)$(BR2_cortex_a5)$(BR2_cortex_a8)$(BR2_cortex_a9)$(BR2_cortex_a15),y)
+FFMPEG_CONF_OPT += --enable-vfp
+else
+FFMPEG_CONF_OPT += --disable-vfp
+endif
+ifeq ($(BR2_ARM_CPU_HAS_NEON),y)
+FFMPEG_CONF_OPT += --enable-neon
+endif
+
+ifeq ($(BR2_MIPS_SOFT_FLOAT),y)
+FFMPEG_CONF_OPT += \
+	--disable-mipsfpu
+else
+FFMPEG_CONF_OPT += \
+	--enable-mipsfpu
+endif
+
+ifeq ($(BR2_mips_32r2),y)
+FFMPEG_CONF_OPT += \
+	--enable-mips32r2
+else
+FFMPEG_CONF_OPT += \
+	--disable-mips32r2
+endif
+
+ifeq ($(BR2_mips_64r2),y)
+FFMPEG_CONF_OPT += \
+	--enable-mipsdspr1 \
+	--enable-mipsdspr2
+else
+FFMPEG_CONF_OPT += \
+	--disable-mipsdspr1 \
+	--disable-mipsdspr2
+endif
+
+ifeq ($(BR2_POWERPC_CPU_HAS_ALTIVEC),y)
+FFMPEG_CONF_OPT += --enable-altivec
+else
+FFMPEG_CONF_OPT += --disable-altivec
+endif
+
+ifeq ($(BR2_PREFER_STATIC_LIB),)
+FFMPEG_CONF_OPT += --enable-pic
 endif
 
 FFMPEG_CONF_OPT += $(call qstrip,$(BR2_PACKAGE_FFMPEG_EXTRACONF))
@@ -143,8 +328,10 @@ define FFMPEG_CONFIGURE_CMDS
 		--sysroot=$(STAGING_DIR) \
 		--host-cc="$(HOSTCC)" \
 		--arch=$(BR2_ARCH) \
-		--extra-cflags=-fPIC \
-		$(DISABLE_IPV6) \
+		--target-os="linux" \
+		--disable-stripping \
+		$(if $(BR2_GCC_TARGET_TUNE),--cpu=$(BR2_GCC_TARGET_TUNE)) \
+		$(SHARED_STATIC_LIBS_OPTS) \
 		$(FFMPEG_CONF_OPT) \
 	)
 endef
