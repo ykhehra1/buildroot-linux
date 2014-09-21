@@ -11,8 +11,6 @@ menuconfig BR2_PACKAGE_FFMPEG
 
 	  http://www.ffmpeg.org
 
-if BR2_PACKAGE_FFMPEG
-
 config BR2_PACKAGE_FFMPEG_GPL
 	bool "Enable GPL code"
 	help
@@ -154,5 +152,3 @@ config BR2_PACKAGE_FFMPEG_EXTRACONF
 	help
 	  Extra parameters that will be appended to FFmpeg's
 	  ./configure commandline.
-
-endif
