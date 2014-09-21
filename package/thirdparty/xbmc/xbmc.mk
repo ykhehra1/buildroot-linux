@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-XBMC_VERSION = 01eb22d8aa030fd7184dc2027842d559d660183f
+XBMC_VERSION = fea9f2524466cf3f270fbebdc6413609441b2758
 XBMC_SITE_METHOD = git
 XBMC_SITE = git://github.com/the-hydra/xbmc.git
 XBMC_INSTALL_STAGING = YES
@@ -23,7 +23,7 @@ XBMC_DEPENDENCIES += libogg flac libmad libmpeg2 libogg \
   libmicrohttpd libssh2 boost fribidi ncurses pcre libnfs afpfs-ng \
   libplist libshairport libbluray libcec \
   readline expat libxml2 yajl samba30 libass opengl libusb-compat \
-  avahi udev tinyxml taglib18 libssh
+  avahi udev tinyxml taglib18 libssh ffmpeg
 
 ifeq ($(BR2_PACKAGE_LIBAMPLAYERM1),y)
 XBMC_DEPENDENCIES += libamplayerm1
