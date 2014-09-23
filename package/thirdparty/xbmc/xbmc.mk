@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-XBMC_VERSION = fea9f2524466cf3f270fbebdc6413609441b2758
+XBMC_VERSION = 5a1004b765609608e49d715163be5d9fc1c25e3b
 XBMC_SITE_METHOD = git
 XBMC_SITE = git://github.com/the-hydra/xbmc.git
 XBMC_INSTALL_STAGING = YES
@@ -14,7 +14,7 @@ XBMC_DEPENDENCIES = host-lzo host-sdl_image
 
 XBMC_CONF_OPT+= --enable-neon --enable-gles --disable-sdl --disable-x11 --disable-xrandr \
   --disable-projectm --enable-debug --disable-joystick --with-cpu=cortex-a9 \
-  --enable-codec=amcodec --enable-player=amlplayer --enable-suspend --enable-powerdown --enable-reboot --with-ffmpeg
+  --enable-codec=amcodec --enable-player=amlplayer --enable-suspend --enable-powerdown --enable-reboot
 
 XBMC_DEPENDENCIES += libogg flac libmad libmpeg2 libogg \
   libsamplerate libtheora libvorbis wavpack bzip2 dbus libcdio \
@@ -23,7 +23,7 @@ XBMC_DEPENDENCIES += libogg flac libmad libmpeg2 libogg \
   libmicrohttpd libssh2 boost fribidi ncurses pcre libnfs afpfs-ng \
   libplist libshairport libbluray libcec \
   readline expat libxml2 yajl samba30 libass opengl libusb-compat \
-  avahi udev tinyxml taglib18 libssh
+  avahi udev tinyxml taglib18 libssh ffmpeg
 
 ifeq ($(BR2_PACKAGE_LIBAMPLAYERM1),y)
 XBMC_DEPENDENCIES += libamplayerm1
