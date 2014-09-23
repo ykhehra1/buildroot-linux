@@ -43,6 +43,9 @@ XBMC_CONF_ENV += USE_TEXTUREPACKER_NATIVE_ROOT="$(HOST_DIR)/usr"
 # For braindead apps like mysql that require running a binary/script
 XBMC_CONF_ENV += PATH=$(STAGING_DIR)/usr/bin:$(TARGET_PATH)
 
+XBMC_CONF_ENV += PKG_CONFIG_SYSROOT_DIR="$(STAGING_DIR)"
+XBMC_CONF_ENV += PKG_CONFIG_PATH="$(STAGING_DIR)/usr/lib/pkgconfig"
+
 define XBMC_BOOTSTRAP
   cd $(XBMC_DIR) && ./bootstrap
 endef
